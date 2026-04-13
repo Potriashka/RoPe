@@ -1,0 +1,8 @@
+flask
+firebase_admin
+datetime
+os
+werkzeug.utils
+flask_session
+gunicorn
+python-firebase
