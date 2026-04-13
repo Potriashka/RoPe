@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Submit Your IVR</h2>
+    <form action="/submit" method="POST" enctype="multipart/form-data">
+        <!-- Name of the Work -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Name of the Work</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="The research of the projects" required>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description (up to 3000 characters)</label>
+            <textarea class="form-control" id="description" name="description" rows="4" maxlength="3000" required placeholder="It will be nice of you if you include some contact info"></textarea>
+        </div>
+
+        <!-- Type of Work -->
+        <div class="mb-3">
+            <label for="type" class="form-label">Type of the Work</label>
+            <select class="form-select" id="type" name="type" required>
+                <option value="research">Research</option>
+                <option value="project">Project</option>
+            </select>
+        </div>
+
+        <!-- Field of Work -->
+        <div class="mb-3">
+            <label for="field" class="form-label">Field of the Work</label>
+            <select class="form-select" id="field" name="field" required>
+                <option value="Business – research">Business – Research</option>
+                <option value="East studies">East Studies</option>
+                <option value="Natural sciences">Natural Sciences</option>
+                <option value="Art studies">Art Studies</option>
+                <option value="History">History</option>
+                <option value="Culturology">Culturology</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Maths">Maths</option>
+                <option value="Management">Management</option>
+                <option value="Linguistics">Linguistics</option>
+                <option value="Education">Education</option>
+                <option value="Politology">Politology</option>
+                <option value="Law">Law</option>
+                <option value="Psychology – research">Psychology – Research</option>
+                <option value="Sociology">Sociology</option>
+                <option value="Philology">Philology</option>
+                <option value="Philosophy">Philosophy</option>
+                <option value="Economics">Economics</option>
+                <option value="IT">IT</option>
+                <option value="Business – projects">Business – Projects</option>
+                <option value="Natural sciences – projects">Natural Sciences – Projects</option>
+                <option value="Design">Design</option>
+                <option value="Publishing">Publishing</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Media">Media</option>
+                <option value="Education – projects">Education – Projects</option>
+                <option value="Events organization">Events Organization</option>
+                <option value="Psychology – projects">Psychology – Projects</option>
+            </select>
+        </div>
+
+       
+
+        <!-- Author's Name -->
+        <div class="mb-3">
+            <label for="author" class="form-label">Author's Name</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="George Washington" required>
+        </div>
+
+        <!-- Author's Group -->
+        <div class="mb-3">
+            <label for="group" class="form-label">Author's Studying Group</label>
+            <input type="text" class="form-control" id="group" name="group" placeholder="11E1" required>
+        </div>
+
+        <!-- Year of Defense -->
+        <div class="mb-3">
+            <label for="year_of_defense" class="form-label">Year of Work's Defense</label>
+            <input type="number" class="form-control" id="year_of_defense" name="year_of_defense" placeholder="2024" min="2000" max="2100" required>
+        </div>
+
+        <!-- Mark (Optional) -->
+        <div class="mb-3">
+            <label for="mark" class="form-label" required>Mark</label>
+            <input type="number" class="form-control" id="mark" name="mark" placeholder="28" min="0" max="30">
+        </div>
+
+        <!-- Image Upload (Optional) -->
+        <div class="mb-3">
+            <label for="file" class="form-label">Attach IVR File</label>
+            <input type="file" class="form-control" id="file" name="file" required>
+        </div>
+        <div class="mb-3">
+            <label for="picture" class="form-label">Attach Picture (Optional)</label>
+            <input type="file" class="form-control" id="picture" name="picture">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
