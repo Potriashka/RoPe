@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <!-- IVR Title -->
+    <h2 class="mb-3">{{ ivr['name'] }}</h2>
+    
+    <!-- Author and Year -->
+    <p class="text-muted">
+        <strong>Author:</strong> {{ ivr['author'] }} <br>
+        <strong>Group:</strong> {{ ivr['group'] }} <br>
+        <strong>Year of Defense:</strong> {{ ivr['year_of_defense'] }}
+    </p>
+
+    <!-- IVR Details -->
+    <div class="my-4">
+        <h4>Description</h4>
+        <p class="oh-that">{{ ivr['description'] }}</p>
+        
+        <h4>Details</h4>
+        <ul>
+            <li><strong>Type of Work:</strong> {{ ivr['type'] }}</li>
+            <li><strong>Field of Work:</strong> {{ ivr['field'] }}</li>
+            {% if ivr['mark'] %}
+            <li><strong>Mark:</strong> {{ ivr['mark'] }}</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Attachments -->
+    {% if ivr['file'] %}
+        <div>
+            <h4>Download File:</h4>
+            <a href="{{ url_for('static', filename=ivr['file'].split('static/',1)[1]) }}" class="btn btn-primary" download>Download</a>
+        </div>
+        {% else %}
+        <p>No file uploaded.</p>
+        {% endif %}
+
+        <!-- Display the picture if it exists -->
+        {% if ivr['picture'] %}
+        <div>
+            <h4>Uploaded Picture:</h4>
+            <img src="{{ url_for('static', filename=ivr['picture'].split('static/',1)[1]) }}" alt="Picture" class="img-fluid" />
+        </div>
+        {% else %}
+        <p>No picture uploaded.</p>
+        {% endif %}
+
+    <p><strong>Submitted At:</strong> {{ ivr['submitted_at'][:10]}} {{ ivr['submitted_at'][11:][:8] }}</p>
+
+
+</div>
+
+<!-- JavaScript for AJAX -->
+<script>
+    document.getElementById('add-star-btn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button action
+    
+        fetch('/add_star/{{ ivr["ivr_id"] }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                // Handle HTTP errors
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json(); // Try to parse as JSON
+        })
+        .then(data => {
+            if (data.success) {
+                // Update the stars count on the page
+                document.getElementById('stars-count').innerText = data.new_star_count;
+            } else {
+                alert(data.message || 'Unable to add star. Please try again later.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding a star. Please try again.');
+        });
+    });
+    console.log("Requesting URL:", '/add_star/{{ ivr["ivr_id"] }}');
+
+    </script>
+    
+    
+{% endblock %}
