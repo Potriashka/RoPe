@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search IVRs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2>Search IVRs</h2>
+
+        <!-- Search Form -->
+        <form id="search-form">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="name" placeholder="Name">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="type">
+                        <option value="research">research</option>
+                        <option value="project">project</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="field" placeholder="Field (e.g., Business)">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control" id="year_of_defense" placeholder="Year (e.g., 2024)">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Search</button>
+        </form>
+
+        <!-- Results -->
+        <div class="mt-4" id="search-results">
+            {% if ivrs %}
+                <h3>Search Results</h3>
+                <div class="list-group">
+                    {% for ivr in ivrs %}
+                        <a href="/ivr/{{ ivr['id'] }}" class="list-group-item list-group-item-action">
+                            <h5>{{ ivr['name'] }}</h5>
+                            <p><strong>Type:</strong> {{ ivr['type'] }} | <strong>Field:</strong> {{ ivr['field'] }} | <strong>Year:</strong> {{ ivr['year_of_defense'] }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No results found. Try adjusting your search criteria.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to handle the search form submission
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get values from the search form
+            const name = document.getElementById('name').value.trim();
+            const type = document.getElementById('type').value.trim();
+            const field = document.getElementById('field').value.trim();
+            const year_of_defense = document.getElementById('year_of_defense').value.trim();
+
+            // Build the query string for the URL
+            let queryString = '/search?';
+            if (name) queryString += `name=${name}&`;
+            if (type) queryString += `type=${type}&`;
+            if (field) queryString += `field=${field}&`;
+            if (year_of_defense) queryString += `year_of_defense=${year_of_defense}&`;
+
+            // Remove the trailing '&' if present
+            queryString = queryString.endsWith('&') ? queryString.slice(0, -1) : queryString;
+
+            // Redirect to the search page with the query string
+            window.location.href = queryString;
+        });
+    </script>
+
+</body>
+</html>
+{% endblock %}
