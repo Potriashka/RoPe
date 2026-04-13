@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Welcome to IVR Portal</h2>
+<h3>Most Recent IVRs</h3>
+<div class="row">
+    {% for ivr in recent_ivrs %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ ivr.to_dict().get('name') }}</h5>
+                <p class="card-text">{{ ivr.to_dict().get('description')[:140] }}...</p>
+                <a href="/ivr/{{ ivr.id }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<h3>Top marked IVRs</h3>
+<div class="row">
+    {% for ivr in starred_ivrs %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ ivr.to_dict().get('name') }}</h5>
+                <p class="card-text">{{ ivr.to_dict().get('description')[:140] }}...</p>
+                <a href="/ivr/{{ ivr.id }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
